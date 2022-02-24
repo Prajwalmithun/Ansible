@@ -1,0 +1,13 @@
+---
+# Ansible playbook to install httpd, copy html files and start httpd server
+
+- name: Install apache on instances
+  yum: name=httpd update_cache=yes state=present 
+
+- name: Copy my index html to instances 
+  copy: src=index.html dest=/var/www/html/index.html
+
+- name: Keep the apache service started
+  service: 
+    name: httpd 
+    state: started

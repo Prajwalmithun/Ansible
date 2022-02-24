@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+   - name: Install chrony
+     shell: |
+      if ! rpm -qa | grep -qw chrony; then
+        yum install -y chrony
+      fi
+
+   - name: Ensure ntp is running
+     service: name=ntpd state=started enabled=yes
+
+   - name: List the sources
+     command: chronyc sources
